@@ -1,7 +1,7 @@
-export function getTodoInputItems(todoInputWrapper) {
-  const todoInput = todoInputWrapper.querySelector(".todo-input");
-  const todoHelper = todoInputWrapper.querySelector(".todo-helper");
-  const todoButton = todoInputWrapper.querySelector(".todo-button");
+export function getTodoInputItems() {  
+  const todoInput = document.querySelector(".todo-input");  
+  const todoHelper = document.querySelector(".todo-helper");  
+  const todoButton = document.querySelector(".todo-button");  
 
   return {
     todoInput,
@@ -10,24 +10,43 @@ export function getTodoInputItems(todoInputWrapper) {
   };
 }
 
-export function validateTodoInput(todoInputWrapper) {
-  const { todoInput, todoHelper, todoButton } =
-    getTodoInputItems(todoInputWrapper);
+export function validateTodoInput() {
 
-  if (todoInput.value.length >= 3) {
-    todoButton.classList.remove("todo-button_disabled");
-    todoHelper.classList.remove("todo-helper_visible");
-  } else {
+  const { todoInput, todoHelper, todoButton } = getTodoInputItems();
+
     todoButton.classList.add("todo-button_disabled");
+
     todoHelper.classList.add("todo-helper_visible");
-  }
+
+    todoInput.addEventListener("keypress", disableEnterKey);
+
+    todoInput.addEventListener("input", addClassButtonHelper); 
+
+    function addClassButtonHelper(){
+      if (todoInput.value.length >= 3) {
+        todoButton.classList.remove("todo-button_disabled");
+        todoHelper.classList.remove("todo-helper_visible");
+      } else {
+        todoButton.classList.add("todo-button_disabled");
+        todoHelper.classList.add("todo-helper_visible");
+      }
+    }
+
+    function disableEnterKey (e){
+      if (e.keyCode === 13 && todoInput.value.length < 3) {
+        e.preventDefault();
+      }
+    }
 }
 
-export function clearTodoInput(todoInputWrapper) {
+export function clearTodoInput() {
+
   const { todoInput, todoHelper, todoButton } =
-    getTodoInputItems(todoInputWrapper);
+    getTodoInputItems();
 
   todoInput.value = "";
+
   todoButton.classList.add("todo-button_disabled");
+
   todoHelper.classList.add("todo-helper_visible");
 }

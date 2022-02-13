@@ -14,13 +14,12 @@ export function validateTodoInput() {
 
   const { todoInput, todoHelper, todoButton } = getTodoInputItems();
 
-    todoButton.classList.add("todo-button_disabled");
-
-    todoHelper.classList.add("todo-helper_visible");
+    todoButton.classList.add("todo-button_disabled");    
 
     todoInput.addEventListener("keypress", disableEnterKey);
-
     todoInput.addEventListener("input", addClassButtonHelper); 
+    todoInput.addEventListener("focus", makeHelperVisible);
+    todoInput.addEventListener("blur", makeHelperHidden);
 
     function addClassButtonHelper(){
       if (todoInput.value.length >= 3) {
@@ -32,11 +31,19 @@ export function validateTodoInput() {
       }
     }
 
-    function disableEnterKey (e){
-      if (e.keyCode === 13 && todoInput.value.length < 3) {
-        e.preventDefault();
+    function disableEnterKey (event){
+      if (event.keyCode === 13 && todoInput.value.length < 3) {
+        event.preventDefault();
       }
     }
+
+    function makeHelperVisible() {
+      todoHelper.classList.add("todo-helper_visible");
+    }
+
+    function makeHelperHidden(){
+      todoHelper.classList.remove("todo-helper_visible");
+    }   
 }
 
 export function clearTodoInput() {

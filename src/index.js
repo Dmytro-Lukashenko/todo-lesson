@@ -2,7 +2,7 @@ import "../styles/index.css";
 import "../index.html";
 
 import { getTodoItem } from "./addTodoItem";
-import { saveTodoToSStorage, getTodosFromSStorage } from "./sessionStorage";
+import { saveTodoToSStorage, getTodosFromSStorage, checkSessionStorageContent } from "./sessionStorage";
 import { filterTodoItems } from "./filterTodoItems";
 import {
   clearTodoInput,
@@ -23,6 +23,7 @@ todoSelect.addEventListener("change", filterTodos);
 function onDOMLoaded() {
   renderTodosFromSStorage();
   validateTodoInput();
+  checkSessionStorageContent();
 }
 
 function renderTodosFromSStorage() {
@@ -45,6 +46,9 @@ function addTodo(event) {
   todoList.appendChild(todoItem);
 
   clearTodoInput();
+  checkSessionStorageContent();
+  const {todoHelper} = getTodoInputItems();  
+  todoHelper.classList.remove("todo-helper_visible");  
 }
 
 function filterTodos(e) {

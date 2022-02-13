@@ -1,4 +1,4 @@
-import { removeTodoFromSStorage } from "./sessionStorage";
+import { removeTodoFromSStorage, checkSessionStorageContent } from "./sessionStorage";
 
 export const getTodoItem = (text) => {
   // Create Todo Item
@@ -35,7 +35,8 @@ function removeTodoItem(todoItem) {
     todoItem.addEventListener("transitionend", function () {
       removeTodoFromSStorage(todoItem);
       todoItem.remove();
-    });
+      checkSessionStorageContent();
+    });    
   };
 }
 

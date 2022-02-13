@@ -17,8 +17,11 @@ export function validateTodoInput() {
     todoButton.classList.add("todo-button_disabled");    
 
     todoInput.addEventListener("keypress", disableEnterKey);
+
     todoInput.addEventListener("input", addClassButtonHelper); 
+
     todoInput.addEventListener("focus", makeHelperVisible);
+    
     todoInput.addEventListener("blur", makeHelperHidden);
 
     function addClassButtonHelper(){

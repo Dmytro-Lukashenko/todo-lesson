@@ -1,10 +1,12 @@
-import { removeTodoFromSStorage, checkSessionStorageContent } from "./sessionStorage";
+import { removeTodoFromSStorage, checkSessionStorageContent, makeCompleteTodoInSStorage } from "./sessionStorage";
 
-export const getTodoItem = (text) => {
+export const getTodoItem = (text, check) => {
   // Create Todo Item
   const todoItem = document.createElement("li");
   todoItem.classList.add("todo-item");
-
+  if (check){
+    todoItem.classList.add("todo-item_completed");
+  }
   // Create and add Todo Text
   const todoText = document.createElement("span");
   todoText.innerText = text;
@@ -41,8 +43,12 @@ function removeTodoItem(todoItem) {
 }
 
 function toggleCheckButton(todoItem) {
-  return (e) => {
-    e.preventDefault();
+  return (event) => {
+    event.preventDefault();
     todoItem.classList.toggle("todo-item_completed");
-  };
+    const bool = todoItem.classList.contains("todo-item_completed");
+    todoItem.addEventListener("click", function () {
+      makeCompleteTodoInSStorage(todoItem, bool);
+    });
+  };  
 }

@@ -2,7 +2,7 @@ import "../styles/index.css";
 import "../index.html";
 
 import { getTodoItem } from "./addTodoItem";
-import { saveTodoToSStorage, getTodosFromSStorage, checkSessionStorageContent } from "./sessionStorage";
+import { saveTodoToSStorage, getTodosFromSStorage, checkSessionStorageContent} from "./sessionStorage";
 import { filterTodoItems } from "./filterTodoItems";
 import {
   clearTodoInput,
@@ -29,18 +29,20 @@ function onDOMLoaded() {
 function renderTodosFromSStorage() {
   let todos = getTodosFromSStorage();
 
-  todos.forEach((todoValue) => {
-    const todoItem = getTodoItem(todoValue);
-
+  // todos.forEach((todoValue) => {
+  //   const todoItem = getTodoItem(todoValue);
+  for (let key in todos) {
+    const todoItem = getTodoItem(todos[key].value, todos[key].status);
     // Add todo item to list
     todoList.appendChild(todoItem);
-  });
+  }
+  // });
 }
 
 function addTodo(event) {
   event.preventDefault();
 
-  saveTodoToSStorage(todoInput.value);
+  saveTodoToSStorage(todoInput.value, true);
 
   const todoItem = getTodoItem(todoInput.value);
   todoList.appendChild(todoItem);
